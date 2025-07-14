@@ -235,6 +235,22 @@ class _ImagePainterPageState extends State<ImagePainterPage> {
     }
   }
 
+  /// 放大图片
+  void _zoomIn() {
+    final currentMatrix = _controller.transformationController.value;
+    final newMatrix = Matrix4.copy(currentMatrix);
+    newMatrix.scale(1.2); // 放大1.2倍
+    _controller.transformationController.value = newMatrix;
+  }
+
+  /// 缩小图片
+  void _zoomOut() {
+    final currentMatrix = _controller.transformationController.value;
+    final newMatrix = Matrix4.copy(currentMatrix);
+    newMatrix.scale(0.8); // 缩小到0.8倍
+    _controller.transformationController.value = newMatrix;
+  }
+
   /// 渲染图片
   Future<Uint8List?> renderImage() async {
     if (_backgroundImage == null) return null;
@@ -409,6 +425,18 @@ class _ImagePainterPageState extends State<ImagePainterPage> {
             onPressed: _selectFreeStyleErase,
           ),
           _buildToolButton(
+            icon: Icons.zoom_in,
+            tooltip: "放大",
+            isSelected: false,
+            onPressed: _zoomIn,
+          ),
+          _buildToolButton(
+            icon: Icons.zoom_out,
+            tooltip: "缩小",
+            isSelected: false,
+            onPressed: _zoomOut,
+          ),
+          _buildToolButton(
             icon: Icons.settings,
             tooltip: "设置",
             isSelected: false,
@@ -504,7 +532,9 @@ class _ImagePainterPageState extends State<ImagePainterPage> {
     return Scaffold(
       appBar: _buildAppBar(),
       body: Stack(
-        children: [_buildPainterArea()],
+        children: [
+          _buildPainterArea(),
+        ],
       ),
       bottomNavigationBar: _buildToolbar(),
     );
