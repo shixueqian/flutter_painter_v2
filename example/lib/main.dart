@@ -1,4 +1,6 @@
+import 'package:example/image_painter_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_painter_v2/flutter_painter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -111,6 +113,15 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final image = await AssetImage('assets/Screenshot2.png').image;
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ImagePainterPage(image: image);
+                }));
+              },
+              child: const Text("Open Image Painter"),
             ),
           ],
         ),

@@ -188,9 +188,13 @@ class _FlutterPainterWidget extends StatelessWidget {
   /// Handles all notifications that might be dispatched from children.
   bool onNotification(FlutterPainterNotification notification) {
     if (notification is DrawableCreatedNotification) {
-      onDrawableCreated?.call(notification.drawable);
+      if (notification.drawable != null) {
+        onDrawableCreated?.call(notification.drawable!);
+      }
     } else if (notification is DrawableDeletedNotification) {
-      onDrawableDeleted?.call(notification.drawable);
+      if (notification.drawable != null) {
+        onDrawableDeleted?.call(notification.drawable!);
+      }
     } else if (notification is SelectedObjectDrawableUpdatedNotification) {
       onSelectedObjectDrawableChanged?.call(notification.drawable);
     } else if (notification is SettingsUpdatedNotification) {
